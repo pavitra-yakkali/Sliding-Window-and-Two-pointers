@@ -1,0 +1,44 @@
+public class Main {
+    public static int maxScore(int[] cardPoints, int k) {
+        int sum = 0;
+        for (int i = 0; i < k; i++) {
+            sum += cardPoints[i];
+        }
+
+        if (k == cardPoints.length) return sum;
+
+        int start = k;
+        int end = cardPoints.length - 1;
+        int ans = sum;
+
+        while (start > 0) {
+            sum -= cardPoints[--start];   // remove one card from left
+            sum += cardPoints[end--];     // add one card from right
+            ans = Math.max(ans, sum);
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        // 🔹 Test Case 1
+        int[] cards1 = {1, 2, 3, 4, 5, 6, 1};
+        int k1 = 3;
+        System.out.println("TC1 → Expected: 12, Got: " + maxScore(cards1, k1));
+
+        // 🔹 Test Case 2 (k = array length → take all)
+        int[] cards2 = {2, 2, 2};
+        int k2 = 3;
+        System.out.println("TC2 → Expected: 6, Got: " + maxScore(cards2, k2));
+
+        // 🔹 Test Case 3 (choose from right side)
+        int[] cards3 = {9, 7, 7, 9, 7, 7, 9};
+        int k3 = 7;
+        System.out.println("TC3 → Expected: 55, Got: " + maxScore(cards3, k3));
+
+        // 🔹 Test Case 4 (only one pick)
+        int[] cards4 = {1, 1000, 1};
+        int k4 = 1;
+        System.out.println("TC4 → Expected: 1 (left) or 1000 (right) → Got: " + maxScore(cards4, k4));
+    }
+}TC ON
+SC 01
