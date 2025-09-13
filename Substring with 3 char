@@ -1,0 +1,37 @@
+import java.util.*;
+
+class Solution {
+    public int numberOfSubstrings(String s) {
+        int n = s.length();
+        Set<Character> st = new HashSet<>();
+        st.add('a');
+        st.add('b');
+        st.add('c');
+
+        int i = 0, j = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        int cnt = 0;
+
+        while (j < n) {
+            char ch = s.charAt(j);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+            while (map.size() == st.size()) {
+                map.put(s.charAt(i), map.get(s.charAt(i)) - 1);
+                if (map.get(s.charAt(i)) == 0) {
+                    map.remove(s.charAt(i));
+                }
+                cnt += n - j;  // all substrings from i to end include all 3 chars
+                i++;
+            }
+            j++;
+        }
+        return cnt;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        String s = "abcabc";
+        System.out.println("Number of substrings: " + sol.numberOfSubstrings(s));
+    }
+}
